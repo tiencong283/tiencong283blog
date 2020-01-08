@@ -40,9 +40,9 @@ public class RegistrationController {
 
     /* handle register request */
     @RequestMapping(value = "/register.html", method = {POST})
-    public String register(@ModelAttribute @Valid UserForm userForm, BindingResult bindingResult) {
-        userFormValidator.validate(userForm, bindingResult);    // logic validation
-        if (bindingResult.hasErrors()) {
+    public String register(@ModelAttribute @Valid UserForm userForm, BindingResult errors) {
+        userFormValidator.validate(userForm, errors);    // logic validation
+        if (errors.hasErrors()) {
             return "registration";
         }
         this.userService.addUser(WebUser.fromUserForm(userForm));

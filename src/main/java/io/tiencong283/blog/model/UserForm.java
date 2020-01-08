@@ -4,29 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 @Getter
 @Setter
 public class UserForm {
-    // username policy
-    @NotEmpty   // it doesnt do any stripping whitespace
-    @Size(max = 15, message = "{username.size.max}")
-    @Pattern(regexp = "\\w+", message = "{username.pattern}")
     private String username;
-
-    // password policy
-    @NotEmpty
-    @Size(min = 10, message = "{password.size.min}")
-    @Pattern(regexp = "\\S+", message = "{password.pattern}")
     private String password;
-    @NotEmpty
     private String matchingPassword;
-
-    // email
-    @NotEmpty
     private String email;
 
     public UserForm() {
