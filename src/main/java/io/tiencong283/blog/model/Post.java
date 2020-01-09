@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -30,7 +30,13 @@ public class Post {
     private PostFormat format;
 
     @Column(nullable = false)
-    private LocalDateTime creationTime;
+    private LocalDate creationDate;
+
+    @Column(nullable = false)
+    private LocalDate publishDate;
+
+    @Column(nullable = false)
+    private boolean draft = true;
 
     @Column(nullable = false, columnDefinition = "text")
     private String rawContent;
@@ -39,7 +45,10 @@ public class Post {
     private String renderedContent;
 
     @Column(unique = true, nullable = false, length = 280)
-    private String urlSlug;
+    private String publicSlug;
+
+    @Column(unique = true, nullable = false)
+    private String adminSlug;
 
     public Post() {
     }
