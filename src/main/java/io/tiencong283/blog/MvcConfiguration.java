@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -30,6 +32,12 @@ public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         registry.addViewController("/login.html").setViewName("login");
     }
 
+    // any thing in static folder will be served
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/").setCachePeriod(0);
+    }
+
     /* MessageSource for i18n resolution */
     @Bean
     public MessageSource messageSource() {
@@ -46,6 +54,11 @@ public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         validator.setApplicationContext(this.appCtx);
         validator.setValidationMessageSource(messageSource());
         return validator;
+    }
+
+    // to configure Cross-Origin Resource Sharing
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
     }
 
     /* thymeleaf configuration from the docs page */

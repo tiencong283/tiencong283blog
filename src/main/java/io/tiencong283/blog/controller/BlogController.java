@@ -59,6 +59,7 @@ public class BlogController {
     @RequestMapping(value ="{year:\\d+}/{month:\\d+}", method={GET, HEAD})
     public String showPostsByDate(Model model, @PathVariable int year, @PathVariable int month, @RequestParam(value = "page", defaultValue = "1") int page){
         Page<Post> posts = postService.getPublishedPostsByDate(year, month, pageableFactory.forLists(page));
+
         model.addAttribute("posts", posts);
         return "index";
     }
@@ -66,6 +67,7 @@ public class BlogController {
     @RequestMapping(value ="{year:\\d+}", method={GET, HEAD})
     public String showPostsByDate(Model model, @PathVariable int year, @RequestParam(value = "page", defaultValue = "1") int page){
         Page<Post> posts = postService.getPublishedPostsByDate(year, pageableFactory.forLists(page));
+
         model.addAttribute("posts", posts);
         return "index";
     }

@@ -22,10 +22,12 @@ public class InitModel implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // add categories
-        postCategoryService.addCategory(new PostCategory("Reversing", "reversing"));
-        postCategoryService.addCategory(new PostCategory("Exploitation", "exploit"));
+        postCategoryService.addCategory(new PostCategory("Reversing"));
+        postCategoryService.addCategory(new PostCategory("Exploitation"));
+        postCategoryService.addCategory(new PostCategory("Networking"));
+        postCategoryService.addCategory(new PostCategory("Data-mining"));
 
         // add users
-        userService.addUser(new WebUser("tiencong283", "passowrd", "tiencong283@outlook.com"));
+        userService.addUser(new WebUser("tiencong283", "password", "tiencong283@outlook.com"));
     }
 }

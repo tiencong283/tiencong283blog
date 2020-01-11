@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>category dashboard</title>
+    <div th:include="_header :: common-css"></div>
+    <link rel="stylesheet" th:href="@{/resources/css/category-admin.css}" type="text/css">
+</head>
+
+<body>
+<div class="grid-container">
+
+    <nav>
+        <ul class="breadcrumbs">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Admin</a></li>
+            <li><a href="#">Blog</a></li>
+            <li class="disabled">Category</li>
+        </ul>
+    </nav>
+
+    <table class="hover unstriped" id="category-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>UrlSlug</th>
+            <th>Absolute Url</th>
+            <th>Post #</th>
+            <th class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category: ${categories}">
+            <td th:text="${category.categoryID}">category ID</td>
+            <td th:text="${category.name}">category name</td>
+            <td th:text="${category.urlSlug}">category urlslug</td>
+
+            <td class="align-justify flex-container"
+                th:with="absoluteUrl='/blog/category/' + ${category.urlSlug} + '.html'">
+                <span th:text="${absoluteUrl}"></span>
+                <a target="_blank" th:href="@{${absoluteUrl}}"><i class="fas fa-external-link-alt"></i></a>
+            </td>
+            <td th:text="${category.countPosts()}">posts count</td>
+
+            <td class="align-spaced flex-container">
+                <!-- edit button -->
+                <button class="editCategoryBtn"><i class="fi-pencil" style="font-size: 18px"></i></button>
+                <!-- delete button -->
+                <button class="deleteCategoryBtn"><i class="fi-trash" style="font-size: 18px"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <button class="button" data-open="addCategoryDialog">Add new category</button>
+    </div>
+
+    <!--    category edit dialog -->
+    <div class="small reveal" data-reveal id="editCategoryDialog">
+        <h3>Edit category</h3>
+        <form id="editCategoryForm">
+            <div>
+                <input name="categoryID" type="hidden">
+            </div>
+            <div>
+                <label>Name:</label>
+                <input name="name" required type="text">
+            </div>
+            <div>
+                <label>UrlSlug:</label>
+                <input name="urlSlug" type="text">
+            </div>
+            <button class="button" type="submit">save</button>
+        </form>
+        <button class="close-button" data-close type="button">
+            <span>&times;</span>
+        </button>
+    </div>
+
+    <!--    category addition dialog -->
+    <div class="small reveal" data-reveal id="addCategoryDialog">
+        <h3>Add new category</h3>
+        <form id="addCategoryForm" method="POST">
+            <div>
+                <label>Name:</label>
+                <input name="name" required type="text">
+            </div>
+            <div>
+                <label>UrlSlug:</label>
+                <input name="urlSlug" type="text">
+            </div>
+            <button class="button" type="submit">save</button>
+        </form>
+        <button class="close-button" data-close type="button">
+            <span>&times;</span>
+        </button>
+    </div>
+
+</div>
+<div th:include="_footer::common-js"></div>
+</body>
+</html>

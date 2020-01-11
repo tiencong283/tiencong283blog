@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
@@ -18,17 +19,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /* customize which urls should be secured, how the auth form parameters */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry security = http
                 .authorizeRequests()
                 .antMatchers("/blog/**", "/login.html", "/register.html", "/resources/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                .anyRequest().authenticated();
+        // configure auth
+        security.and()
                 .formLogin()
                 .loginPage("/login.html")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/blog")
                 .permitAll();
+        security.and()
+                .csrf().disable();
     }
 
     /* user credential DAO bean for building auth object */
@@ -49,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()); //.passwordEncoder(bCryptPasswordEncoder());
     }
+
     @SuppressWarnings("deprecation")
     @Bean
     public NoOpPasswordEncoder passwordEncoder() {

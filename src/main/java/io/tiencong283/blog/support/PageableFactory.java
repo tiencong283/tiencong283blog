@@ -25,6 +25,10 @@ public class PageableFactory {
         return build(page - 1, pageSizeForLists);
     }
 
+    public Pageable forDashboard(int page) {
+        return build(page - 1, pageSizeForLists);
+    }
+
     private Pageable build(int page, int pageSize) {
         return PageRequest.of(page, pageSize, Sort.Direction.DESC, sortingField);
     }
