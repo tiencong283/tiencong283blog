@@ -1,9 +1,23 @@
-a {
-  color: inherit;
-}
-a:hover {
-  color: inherit;
+.button {
+  margin: 0;
 }
 button:hover {
   cursor: pointer;
+}
+
+/* registration style*/
+#reg-form {
+  margin-top: 40px;
+}
+#reg-form .input-group-label {
+  background-color: inherit;
+}
+#reg-form .input-group-label i {
+  font-size: 21px;
+}
+.reg-form-error {
+  border-color: #c60f13;
+}
+#signup-btn {
+  margin-top: 28px;
 }

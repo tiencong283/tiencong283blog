@@ -22,7 +22,7 @@ public class UserFormValidator implements Validator {
     private static Pattern passwordPattern = Pattern.compile("\\S+");
 
     // email policy
-    private static Pattern emailPattern = Pattern.compile("(\\w+)(\\.\\w+)*@(\\w+)(\\.\\w+)*");
+    private static Pattern emailPattern = Pattern.compile("(\\w+)(\\.\\w+)*@(\\w+)(\\.\\w+)+");
 
     @Autowired
     public UserFormValidator(UserService userService) {
@@ -89,8 +89,8 @@ public class UserFormValidator implements Validator {
         // password not match
         String matchingPassword = userForm.getMatchingPassword();
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "matchingPassword", "empty");
-        if (errors.hasFieldErrors("password") && !errors.hasFieldErrors("password") && !password.equals(matchingPassword)) {
-            errors.rejectValue("password", "password.notMatch");
+        if (!errors.hasFieldErrors("password") && !password.equals(matchingPassword)) {
+            errors.rejectValue("matchingPassword", "matchingPassword.notMatch");
         }
 
         // email check

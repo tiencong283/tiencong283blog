@@ -3,34 +3,88 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Retristration</title>
+    <title>Signup | tiencong283blog</title>
+    <div th:include="_header :: common-css"></div>
 </head>
 
 <body>
-    <form method="POST" th:object="${userForm}" th:action="@{/register.html}">
-        <div>
-            <label for="username">Username: </label>
-            <input type="text" id="username" th:field="*{username}" th:errorclass="error">
-            <p th:if="${#fields.hasErrors('username')}" th:text="${#fields.errors('username')}"></p>
-        </div>
-        <div>
-            <label for="password">Password: </label>
-            <input type="password" id="password" th:field="*{password}" th:errorclass="error">
-            <p th:if="${#fields.hasErrors('password')}" th:text="${#fields.errors('password')}"></p>
-        </div>
-        <div>
-            <label for="matchingPassword">Confirm password: </label>
-            <input type="password" id="matchingPassword" th:field="*{matchingPassword}" th:errorclass="error">
-            <p th:if="${#fields.hasErrors('matchingPassword')}" th:text="${#fields.errors('matchingPassword')}"></p>
-        </div>
-        <div>
-            <label for="email">email: </label>
-            <input type="text" id="email" th:field="*{email}" th:errorclass="error">
-            <p th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email')}"></p>
-        </div>
-        <div>
-            <button type="submit">register</button>
-        </div>
-    </form>
+
+<div class="grid-container">
+    <div class="registration">
+        <h3>Sign up</h3>
+        <p class="separator-center">Collaboration, sharing are the effective ways to learn</p>
+
+        <form id="reg-form" method="POST" th:action="@{/register.html}" th:object="${userForm}">
+            <!--      username and email row -->
+            <div class="grid-x grid-margin-x">
+                <div class="cell medium-6">
+                    <div class="input-group">
+                        <span class="input-group-label"><i class="fi-torso-business"></i></span>
+                        <input aria-describedby="usernameHT" class="input-group-field" placeholder="username"
+                               required th:errorclass="reg-form-error" th:field="*{username}"
+                               type="text">
+                    </div>
+                    <!--        show error message           -->
+                    <p class="help-text" id="usernameHT" th:if="${#fields.hasErrors('username')}"
+                       th:text="${#strings.listJoin(#fields.errors('username'),', ')}">only accept alphanumeric and
+                        underscore chars and must be less than 15</p>
+                    <!--        default help text            -->
+                    <p class="help-text" id="usernameHT" th:unless="${#fields.hasErrors('username')}">only accept
+                        alphanumeric and
+                        underscore chars and must be less than 15</p>
+                </div>
+
+                <div class="cell medium-6">
+                    <div class="input-group">
+                        <span class="input-group-label"><i class="fi-mail"></i></span>
+                        <input aria-describedby="emailHT" class="input-group-field" placeholder="email" required
+                               th:errorclass="reg-form-error" th:field="*{email}" type="text">
+                    </div>
+                    <p class="help-text" id="emailHT" th:if="${#fields.hasErrors('email')}"
+                       th:text="${#strings.listJoin(#fields.errors('email'),', ')}">malformed emails are not allowed</p>
+
+                    <p class="help-text" id="emailHT" th:unless="${#fields.hasErrors('email')}">malformed emails are not
+                        allowed</p>
+                </div>
+            </div>
+            <!--      password and matching password row -->
+            <div class="grid-x grid-margin-x">
+                <div class="cell medium-6">
+                    <div class="input-group">
+                        <span class="input-group-label"><i class="fi-lock"></i></span>
+                        <input aria-describedby="passwordHT" class="input-group-field" placeholder="password"
+                               required th:errorclass="reg-form-error" th:field="*{password}"
+                               type="password">
+                    </div>
+                    <p class="help-text" id="passwordHT" th:if="${#fields.hasErrors('password')}"
+                       th:text="${#strings.listJoin(#fields.errors('password'),', ')}">must be at least 10 and a mix of
+                        lower, upper and numeric characters</p>
+
+                    <p class="help-text" id="passwordHT" th:unless="${#fields.hasErrors('password')}">must be at least
+                        10 and a mix of
+                        lower, upper and numeric characters</p>
+                </div>
+
+                <div class="cell medium-6">
+                    <div class="input-group">
+                        <span class="input-group-label"><i class="fi-lock"></i></span>
+                        <input aria-describedby="matchingPasswordHT" class="input-group-field" placeholder="password"
+                               required th:errorclass="reg-form-error" th:field="*{matchingPassword}"
+                               type="password">
+                    </div>
+                    <p class="help-text" id="matchingPasswordHT" th:if="${#fields.hasErrors('matchingPassword')}"
+                       th:text="${#strings.listJoin(#fields.errors('matchingPassword'),', ')}"></p>
+                </div>
+            </div>
+            <!--   signup button   -->
+            <div id="signup-btn">
+                <button class="button">Sign up</button>
+                <span>or <a href="">Sign in</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:include="_footer::common-js"></div>
 </body>
 </html>
