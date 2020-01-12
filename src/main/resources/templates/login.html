@@ -1,25 +1,57 @@
 <!DOCTYPE html>
+<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Login | tiencong283</title>
+    <div th:include="_header :: common-css"></div>
 </head>
 
 <body>
-    <form method="POST" th:action="@{/login.html}">
+
+<div class="grid-container main-container">
+
+    <nav>
+        <ul class="breadcrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a href="#" class="disabled">Sign in</a></li>
+        </ul>
+    </nav>
+
+
+    <div id="login-wrapper">
         <div>
-            <label for="username">Username: </label>
-            <input type="text" name="username" id="username">
+            <h4>Sign in</h4>
         </div>
-        <div>
-            <label for="password">Password: </label>
-            <input type="password" name="password" id="password">
-        </div>
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
+
+        <form th:action="@{/login.html}" method="POST" class="auth-form" id="login-form" autocomplete="off">
+            <!--    username    -->
+            <div class="auth-form-row">
+                <label for="username">Username:</label>
+                <div class="input-group">
+                    <span class="input-group-label"><i class="fi-torso-business"></i></span>
+                    <input class="input-group-field" id="username" name="username" placeholder="username" type="text" required>
+                </div>
+                <div th:if="${param.error}" class="help-text" style="color: #c60f13;">Invalid username and password</div>
+            </div>
+            <!--    password    -->
+            <div  class="auth-form-row">
+                <label for="password">Password:</label>
+                <div class="input-group">
+                    <span class="input-group-label"><i class="fi-lock"></i></span>
+                    <input class="input-group-field" id="password" name="password" placeholder="password" type="password" required>
+                </div>
+            </div>
+            <!-- sign in button -->
+            <div class="auth-button-wrapper">
+                <button class="button border-radius-none" type="submit">Sign in</button>
+                <span>or <a th:href="@{/register.html}">Sign up</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:include="_footer::common-js"></div>
 </body>
 </html>

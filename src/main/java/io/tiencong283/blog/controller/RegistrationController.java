@@ -5,7 +5,6 @@ import io.tiencong283.blog.model.WebUser;
 import io.tiencong283.blog.service.UserService;
 import io.tiencong283.blog.validator.UserFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +19,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class RegistrationController {
     private UserService userService;
     private UserFormValidator userFormValidator;
-    @Autowired
-    private MessageSource messageSource;
 
     @Autowired
     public RegistrationController(UserService userService, UserFormValidator userFormValidator) {
@@ -40,9 +37,10 @@ public class RegistrationController {
 
     /* handle register request */
     @RequestMapping(value = "/register.html", method = {POST})
-    public String register(@ModelAttribute @Valid UserForm userForm, BindingResult errors) {
+    public String register(@ModelAttribute @Valid UserForm userForm, BindingResult errors, Model model) {
         userFormValidator.validate(userForm, errors);    // logic validation
         if (errors.hasErrors()) {
+            model.addAttribute("checking", true);
             return "registration";
         }
         this.userService.addUser(WebUser.fromUserForm(userForm));
