@@ -9,11 +9,11 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class PostCategoryValidator implements Validator {
+public class CategoryFormValidator implements Validator {
     private PostCategoryService categoryService;
 
     @Autowired
-    public PostCategoryValidator(PostCategoryService categoryService) {
+    public CategoryFormValidator(PostCategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -24,15 +24,15 @@ public class PostCategoryValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        PostCategory category = (PostCategory)o;
+        PostCategory category = (PostCategory) o;
         String name = category.getName();
         String urlSlug = category.getUrlSlug();
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "empty");
-        if (categoryService.exists(name)){  // category name is unique
+        if (categoryService.exists(name)) {  // category name is unique
             errors.reject("name", "category.name.duplicate");
         }
-        if (urlSlug.length()>0 && categoryService.exists(urlSlug)){ // category urlSlug is unique too
+        if (urlSlug.length() > 0 && categoryService.exists(urlSlug)) { // category urlSlug is unique too
             errors.reject("name", "category.urlSlug.duplicate");
         }
     }

@@ -2,7 +2,7 @@ package io.tiencong283.blog.controller;
 
 import io.tiencong283.blog.model.PostCategory;
 import io.tiencong283.blog.service.PostCategoryService;
-import io.tiencong283.blog.validator.PostCategoryValidator;
+import io.tiencong283.blog.validator.CategoryFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,34 +19,34 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
-@RequestMapping("/admin/blog")
-public class AdminController {
+@RequestMapping("/admin/blog/category")
+public class CategoryAdminController {
     private PostCategoryService postCategoryService;
-    private PostCategoryValidator categoryValidator;
+    private CategoryFormValidator categoryValidator;
 
     @Autowired
-    public AdminController(PostCategoryService postCategoryService, PostCategoryValidator categoryValidator) {
+    public CategoryAdminController(PostCategoryService postCategoryService, CategoryFormValidator categoryValidator) {
         this.postCategoryService = postCategoryService;
         this.categoryValidator = categoryValidator;
     }
 
     @ModelAttribute
-    public void populateCategories(Model model){
+    public void populateCategories(Model model) {
         List<PostCategory> allCategories = postCategoryService.getAllCategories();
         Collections.sort(allCategories);
         model.addAttribute("categories", allCategories);
     }
 
-    @RequestMapping(value = "/category", method = {GET, HEAD})
-    public String showCategoryDashboard(Model model){
+    @RequestMapping(value = "", method = {GET, HEAD})
+    public String showCategoryDashboard(Model model) {
         model.addAttribute("category", new PostCategory());
-        return "admin/category";
+        return "category-index";
     }
 
-    @RequestMapping(value = "/category", method = {POST})
-    public String addCategory(@ModelAttribute @Valid PostCategory postCategory, BindingResult errors){
+    @RequestMapping(value = "", method = {POST})
+    public String addCategory(@ModelAttribute @Valid PostCategory postCategory, BindingResult errors) {
         categoryValidator.validate(postCategory, errors);
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             // future
             return "redirect:category";
         }
@@ -54,22 +54,22 @@ public class AdminController {
         return "redirect:category";
     }
 
-    @RequestMapping(value = "/category/{categoryID:\\d+}", method = {GET, HEAD}, produces = "application/json")
+    @RequestMapping(value = "/{categoryID:\\d+}", method = {GET, HEAD}, produces = "application/json")
     @ResponseBody
-    public PostCategory getCategory(@PathVariable int categoryID){
+    public PostCategory getCategory(@PathVariable int categoryID) {
         return postCategoryService.getCategory(categoryID);
     }
 
-    @RequestMapping(value = "/category/{categoryID:\\d+}", method = {PUT})
+    @RequestMapping(value = "/{categoryID:\\d+}", method = {PUT})
     @ResponseBody
-    public void editCategory(@PathVariable int categoryID, @ModelAttribute PostCategory postCategory){
+    public void editCategory(@PathVariable int categoryID, @ModelAttribute PostCategory postCategory) {
         postCategory.setCategoryID(categoryID);
         postCategoryService.updateCategory(postCategory);
     }
 
-    @RequestMapping(value = "/category/{categoryID:\\d+}", method = {DELETE})
+    @RequestMapping(value = "/{categoryID:\\d+}", method = {DELETE})
     @ResponseBody
-    public void deleteCategory(@PathVariable int categoryID){
+    public void deleteCategory(@PathVariable int categoryID) {
         postCategoryService.deleteCategory(categoryID);
     }
 }

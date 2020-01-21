@@ -10,7 +10,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<WebUser, Integer> {
     Optional<WebUser> findByUserID(int userID); // Optional indicates the potential absence of a value
+
     WebUser findByUsername(String username);
+
     List<WebUser> findAll();
+
     boolean existsByUsername(String username);
 }

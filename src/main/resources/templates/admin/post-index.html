@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Post Dashboard | tiencong283</title>
+    <div th:include="_header :: common-css"></div>
+</head>
+
+<body>
+<div class="grid-container main-container">
+
+    <nav>
+        <ul class="breadcrumbs">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Admin</a></li>
+            <li><a href="#">Blog</a></li>
+            <li class="disabled">Post</li>
+        </ul>
+    </nav>
+    <div id="admin-post-list">
+        <h4>Published Posts</h4>
+        <p th:if="${posts.isEmpty()}">No posts yet</p>
+        <table class="unstriped" th:if="${!posts.isEmpty()}">
+            <thread>
+                <tr>
+                    <th>postID</th>
+                    <th>title</th>
+                    <th>published date</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.postID}"></td>
+                <td th:text="${post.title}"></td>
+                <td th:text="${post.publishDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{post/new}">Create new post</a>
+    </div>
+</div>
+<div th:include="_footer::common-js"></div>
+</body>
+</html>

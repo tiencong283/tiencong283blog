@@ -3,7 +3,6 @@ package io.tiencong283.blog.service;
 import io.tiencong283.blog.model.WebUser;
 import io.tiencong283.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,10 +19,11 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // authentication
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public WebUser loadUserByUsername(String username) throws UsernameNotFoundException {
         WebUser authUser = this.userRepository.findByUsername(username);
-        if (authUser != null){
+        if (authUser != null) {
             authUser.createUser();
         } else {
             throw new UsernameNotFoundException(String.format("cannot find the user with username '%s'", username));
@@ -31,19 +31,23 @@ public class UserService implements UserDetailsService {
         return authUser;
     }
 
+    // get user by userID
     public Optional<WebUser> getUserByUserID(int userID) {
-        return this.userRepository.findByUserID(userID);
+        return userRepository.findByUserID(userID);
     }
 
+    // get all users
     public List<WebUser> getAllUsers() {
-        return this.userRepository.findAll();
+        return userRepository.findAll();
     }
 
+    // return true if the user with username exists
     public boolean userExists(String username) {
         return userRepository.existsByUsername(username);
     }
 
-    public void addUser(WebUser webUser){
+    // add new user
+    public void addUser(WebUser webUser) {
         this.userRepository.saveAndFlush(webUser);
     }
 }

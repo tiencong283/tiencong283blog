@@ -12,17 +12,15 @@ import java.util.regex.Pattern;
 
 @Component
 public class UserFormValidator implements Validator {
-    private UserService userService;
     // user policy
     private static int usernameMaxLen = 15;
     private static Pattern usernamePattern = Pattern.compile("\\w+");
-
     // password policy
     private static int passowrdMin = 10;
     private static Pattern passwordPattern = Pattern.compile("\\S+");
-
     // email policy
     private static Pattern emailPattern = Pattern.compile("(\\w+)(\\.\\w+)*@(\\w+)(\\.\\w+)+");
+    private UserService userService;
 
     @Autowired
     public UserFormValidator(UserService userService) {
@@ -42,14 +40,14 @@ public class UserFormValidator implements Validator {
         // username check
         String username = userForm.getUsername();
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "empty");
-        if (!errors.hasFieldErrors("username")){    // pass empty check
-            if (username.length() > usernameMaxLen){
+        if (!errors.hasFieldErrors("username")) {    // pass empty check
+            if (username.length() > usernameMaxLen) {
                 errors.rejectValue("username", "username.size.max");
             }
-            if (!usernamePattern.matcher(username).matches()){
+            if (!usernamePattern.matcher(username).matches()) {
                 errors.rejectValue("username", "username.pattern");
             }
-            if (!errors.hasFieldErrors("username") && userService.userExists(username)){    // pass size and pattern check
+            if (!errors.hasFieldErrors("username") && userService.userExists(username)) {    // pass size and pattern check
                 errors.rejectValue("username", "username.duplicate");
             }
         }
@@ -57,14 +55,14 @@ public class UserFormValidator implements Validator {
         // password check
         String password = userForm.getPassword();
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "empty");
-        if (!errors.hasFieldErrors("password")){    // pass emtpy check
-            if (password.length() < passowrdMin){
+        if (!errors.hasFieldErrors("password")) {    // pass emtpy check
+            if (password.length() < passowrdMin) {
                 errors.rejectValue("password", "password.size.min");
             }
-            if (!passwordPattern.matcher(password).matches()){
+            if (!passwordPattern.matcher(password).matches()) {
                 errors.rejectValue("password", "password.pattern");
             }
-            if (!errors.hasFieldErrors("password")){    // pass size and pattern check
+            if (!errors.hasFieldErrors("password")) {    // pass size and pattern check
                 // check complex password
                 boolean hasUppercase = false;
                 boolean hasNumber = false;
@@ -96,7 +94,7 @@ public class UserFormValidator implements Validator {
         // email check
         String email = userForm.getEmail();
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "empty");
-        if (!errors.hasFieldErrors("email") && !emailPattern.matcher(email).matches()){
+        if (!errors.hasFieldErrors("email") && !emailPattern.matcher(email).matches()) {
             errors.rejectValue("email", "email.pattern");
         }
     }

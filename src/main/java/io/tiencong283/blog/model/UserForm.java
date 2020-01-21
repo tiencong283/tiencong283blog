@@ -28,7 +28,7 @@ public class UserForm {
     }
 
     public void setEmail(String email) {
-        this.email = StringUtils.trimWhitespace(email);;
+        this.email = StringUtils.trimWhitespace(email);
     }
 }
 

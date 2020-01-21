@@ -10,11 +10,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PageableFactory {
     private final int pageSizeForLists;
+    private final int pageSizeForDashboard;
+
     private final String sortingField = "publishDate";
 
     @Autowired
-    public PageableFactory(@Value("${pageSizeForLists}") int pageSizeForLists) {
+    public PageableFactory(@Value("${pageSizeForLists}") int pageSizeForLists, @Value("${pageSizeForDashboard}") int pageSizeForDashboard) {
         this.pageSizeForLists = pageSizeForLists;
+        this.pageSizeForDashboard = pageSizeForDashboard;
     }
 
     public Pageable all() {
@@ -26,7 +29,7 @@ public class PageableFactory {
     }
 
     public Pageable forDashboard(int page) {
-        return build(page - 1, pageSizeForLists);
+        return build(page - 1, pageSizeForDashboard);
     }
 
     private Pageable build(int page, int pageSize) {

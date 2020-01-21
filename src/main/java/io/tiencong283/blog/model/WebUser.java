@@ -18,10 +18,17 @@ public class WebUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userID;
-    @Column(unique = true)
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private WebUserRole role = WebUserRole.USER_ROLE;
 
@@ -41,6 +48,10 @@ public class WebUser implements UserDetails {
         this.email = email;
         this.role = role;
         this.createUser();
+    }
+
+    public static WebUser fromUserForm(UserForm userForm) {
+        return new WebUser(userForm.getUsername(), userForm.getPassword(), userForm.getEmail());
     }
 
     public void createUser() {
@@ -91,7 +102,15 @@ public class WebUser implements UserDetails {
         return this.user.isEnabled();
     }
 
-    public static WebUser fromUserForm(UserForm userForm){
-        return new WebUser(userForm.getUsername(), userForm.getPassword(), userForm.getEmail());
+    @Override
+    public String toString() {
+        return "WebUser{" +
+                "userID=" + userID +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", user=" + user +
+                '}';
     }
 }

@@ -1,9 +1,8 @@
 html, body {
-  height: 100%;
+  position: relative;
 }
 body {
   background-color: silver;
-  position: relative;
 }
 a:hover {
   text-decoration: underline;
@@ -13,6 +12,9 @@ button:hover {
 }
 .button {
   margin: 0;
+}
+.has-error-color {
+  color: #c60f13;
 }
 .input-group-label {
   background-color: transparent;
@@ -32,7 +34,7 @@ button:hover {
 .auth-form .input-group-label i {
   font-size: 21px;
 }
-.auth-form-error {
+.has-error {
   border-color: #c60f13;
 }
 .auth-form {
@@ -47,4 +49,10 @@ button:hover {
 #login-form {
   width: 40%;
   min-width: 300px;
+}
+
+/* new post form */
+#newpost-form #rawContent {
+  height: 500px;
+  resize: vertical;
 }

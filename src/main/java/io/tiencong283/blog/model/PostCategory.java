@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class PostCategory implements Comparable<PostCategory>{
+public class PostCategory implements Comparable<PostCategory> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryID;
@@ -39,7 +39,7 @@ public class PostCategory implements Comparable<PostCategory>{
         this.setUrlSlug(urlSlug);
     }
 
-    public int countPosts(){
+    public int countPosts() {
         return posts.size();
     }
 

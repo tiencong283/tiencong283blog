@@ -33,7 +33,7 @@
                     <span class="input-group-label"><i class="fi-torso-business"></i></span>
                     <input class="input-group-field" id="username" name="username" placeholder="username" type="text" required>
                 </div>
-                <div th:if="${param.error}" class="help-text" style="color: #c60f13;">Invalid username and password</div>
+                <div th:if="${param.error}" class="help-text has-error-color">Invalid username and password</div>
             </div>
             <!--    password    -->
             <div  class="auth-form-row">

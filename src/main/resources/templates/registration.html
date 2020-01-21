@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Signup | tiencong283</title>
+    <title>Registration | tiencong283</title>
     <div th:include="_header :: common-css"></div>
 </head>
 
@@ -30,7 +30,7 @@
                     <div class="input-group">
                         <span class="input-group-label"><i class="fi-torso-business"></i></span>
                         <input aria-describedby="usernameHT" class="input-group-field" placeholder="username"
-                               required th:errorclass="auth-form-error" th:field="*{username}"
+                               required th:errorclass="has-error" th:field="*{username}"
                                type="text">
                     </div>
                     <!--        show error message           -->
@@ -47,7 +47,7 @@
                     <div class="input-group">
                         <span class="input-group-label"><i class="fi-mail"></i></span>
                         <input aria-describedby="emailHT" class="input-group-field" placeholder="email" required
-                               th:errorclass="auth-form-error" th:field="*{email}" type="text">
+                               th:errorclass="has-error" th:field="*{email}" type="text">
                     </div>
                     <p class="help-text" id="emailHT" th:if="${#fields.hasErrors('email')}"
                        th:text="${#strings.listJoin(#fields.errors('email'),', ')}">malformed emails are not allowed</p>
@@ -62,7 +62,7 @@
                     <div class="input-group">
                         <span class="input-group-label"><i class="fi-lock"></i></span>
                         <input aria-describedby="passwordHT" class="input-group-field" placeholder="password"
-                               required th:errorclass="auth-form-error" th:field="*{password}"
+                               required th:errorclass="has-error" th:field="*{password}"
                                type="password">
                     </div>
                     <p class="help-text" id="passwordHT" th:if="${#fields.hasErrors('password')}"
@@ -78,7 +78,7 @@
                     <div class="input-group">
                         <span class="input-group-label"><i class="fi-lock"></i></span>
                         <input aria-describedby="matchingPasswordHT" class="input-group-field" placeholder="matching password"
-                               required th:errorclass="auth-form-error" th:field="*{matchingPassword}"
+                               required th:errorclass="has-error" th:field="*{matchingPassword}"
                                type="password">
                     </div>
                     <p class="help-text" id="matchingPasswordHT" th:if="${#fields.hasErrors('matchingPassword')}"
