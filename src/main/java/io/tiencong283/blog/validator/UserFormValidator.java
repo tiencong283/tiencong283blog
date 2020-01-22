@@ -1,25 +1,24 @@
 package io.tiencong283.blog.validator;
 
-import io.tiencong283.blog.model.UserForm;
 import io.tiencong283.blog.service.UserService;
+import io.tiencong283.blog.view.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.util.regex.Pattern;
 
 @Component
 public class UserFormValidator implements Validator {
-    // user policy
-    private static int usernameMaxLen = 15;
-    private static Pattern usernamePattern = Pattern.compile("\\w+");
-    // password policy
-    private static int passowrdMin = 10;
     private static Pattern passwordPattern = Pattern.compile("\\S+");
+    // user policy
+    private final int usernameMaxLen = 15;
+    private final Pattern usernamePattern = Pattern.compile("\\w+");
+    // password policy
+    private final int passowrdMin = 10;
     // email policy
-    private static Pattern emailPattern = Pattern.compile("(\\w+)(\\.\\w+)*@(\\w+)(\\.\\w+)+");
+    private final Pattern emailPattern = Pattern.compile("(\\w+)(\\.\\w+)*@(\\w+)(\\.\\w+)+");
     private UserService userService;
 
     @Autowired
@@ -39,7 +38,6 @@ public class UserFormValidator implements Validator {
 
         // username check
         String username = userForm.getUsername();
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "empty");
         if (!errors.hasFieldErrors("username")) {    // pass empty check
             if (username.length() > usernameMaxLen) {
                 errors.rejectValue("username", "username.size.max");
@@ -54,7 +52,6 @@ public class UserFormValidator implements Validator {
 
         // password check
         String password = userForm.getPassword();
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "empty");
         if (!errors.hasFieldErrors("password")) {    // pass emtpy check
             if (password.length() < passowrdMin) {
                 errors.rejectValue("password", "password.size.min");
@@ -86,14 +83,12 @@ public class UserFormValidator implements Validator {
 
         // password not match
         String matchingPassword = userForm.getMatchingPassword();
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "matchingPassword", "empty");
         if (!errors.hasFieldErrors("password") && !password.equals(matchingPassword)) {
             errors.rejectValue("matchingPassword", "matchingPassword.notMatch");
         }
 
         // email check
         String email = userForm.getEmail();
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "empty");
         if (!errors.hasFieldErrors("email") && !emailPattern.matcher(email).matches()) {
             errors.rejectValue("email", "email.pattern");
         }

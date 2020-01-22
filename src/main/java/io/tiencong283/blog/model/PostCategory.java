@@ -52,12 +52,7 @@ public class PostCategory implements Comparable<PostCategory> {
     }
 
     @Override
-    public String toString() {
-        return String.format("PostCategory{id: %d, name: '%s', urlSlug: '%s'}", this.categoryID, this.name, this.urlSlug);
-    }
-
-    @Override
     public int compareTo(PostCategory postCategory) {
-        return this.categoryID - postCategory.categoryID;
+        return this.categoryID - postCategory.categoryID;   // sort by categoryID
     }
 }

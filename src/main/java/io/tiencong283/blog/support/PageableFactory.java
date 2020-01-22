@@ -1,6 +1,5 @@
 package io.tiencong283.blog.support;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,12 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PageableFactory {
-    private final int pageSizeForLists;
-    private final int pageSizeForDashboard;
+    public final int pageSizeForLists;
+    public final int pageSizeForDashboard;
 
-    private final String sortingField = "publishDate";
-
-    @Autowired
     public PageableFactory(@Value("${pageSizeForLists}") int pageSizeForLists, @Value("${pageSizeForDashboard}") int pageSizeForDashboard) {
         this.pageSizeForLists = pageSizeForLists;
         this.pageSizeForDashboard = pageSizeForDashboard;
@@ -33,6 +29,6 @@ public class PageableFactory {
     }
 
     private Pageable build(int page, int pageSize) {
-        return PageRequest.of(page, pageSize, Sort.Direction.DESC, sortingField);
+        return PageRequest.of(page, pageSize, Sort.Direction.DESC, "publishDate");
     }
 }

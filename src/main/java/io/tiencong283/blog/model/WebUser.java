@@ -1,5 +1,6 @@
 package io.tiencong283.blog.model;
 
+import io.tiencong283.blog.view.UserForm;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -100,17 +101,5 @@ public class WebUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.user.isEnabled();
-    }
-
-    @Override
-    public String toString() {
-        return "WebUser{" +
-                "userID=" + userID +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", user=" + user +
-                '}';
     }
 }

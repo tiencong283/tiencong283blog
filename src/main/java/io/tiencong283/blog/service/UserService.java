@@ -19,7 +19,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    // authentication
+    // for authentication
     @Override
     public WebUser loadUserByUsername(String username) throws UsernameNotFoundException {
         WebUser authUser = this.userRepository.findByUsername(username);

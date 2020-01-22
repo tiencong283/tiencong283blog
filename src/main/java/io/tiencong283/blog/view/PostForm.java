@@ -1,5 +1,6 @@
-package io.tiencong283.blog.support;
+package io.tiencong283.blog.view;
 
+import io.tiencong283.blog.model.Post;
 import io.tiencong283.blog.model.PostCategory;
 import io.tiencong283.blog.model.PostFormat;
 import lombok.Getter;
@@ -18,10 +19,19 @@ public class PostForm {
     private PostFormat format;
     @NotEmpty(message = "{empty}")
     private String rawContent;
-    private boolean draft;
+    private boolean draft = true;   // by default it's true
     private LocalDate publishDate;
 
     public PostForm() {
+    }
+
+    public PostForm(Post post) {
+        this.title = post.getTitle();
+        this.category = post.getCategory();
+        this.format = post.getFormat();
+        this.rawContent = post.getRawContent();
+        this.draft = post.isDraft();
+        this.publishDate = post.getPublishDate();
     }
 
     public void setTitle(String title) {

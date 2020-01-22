@@ -1,15 +1,24 @@
-package io.tiencong283.blog.model;
+package io.tiencong283.blog.view;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
 public class UserForm {
+    @NotEmpty(message = "{empty}")
     private String username;
+
+    @NotEmpty(message = "{empty}")
     private String password;
+
+    @NotEmpty(message = "{empty}")
     private String matchingPassword;
+
+    @NotEmpty(message = "{empty}")
     private String email;
 
     public UserForm() {

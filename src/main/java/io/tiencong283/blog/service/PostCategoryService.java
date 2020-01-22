@@ -16,12 +16,13 @@ public class PostCategoryService {
         this.categoryRepo = categoryRepo;
     }
 
-    // query methods
+    // add new category
     public void addCategory(PostCategory postCategory) {
         categoryRepo.save(postCategory);
         categoryRepo.flush();
     }
 
+    // get all categories
     public List<PostCategory> getAllCategories() {
         return categoryRepo.findAll();
     }
@@ -31,15 +32,18 @@ public class PostCategoryService {
         return category;
     }
 
+    // return true if category with name exists
     public boolean exists(String name) {
         return categoryRepo.existsByNameIgnoreCase(name);
     }
 
+    // delete category by its ID
     public void deleteCategory(int categoryID) {
         categoryRepo.deleteById(categoryID);
         categoryRepo.flush();
     }
 
+    // update category
     public void updateCategory(PostCategory postCategory) {
         PostCategory update = getCategory(postCategory.getCategoryID());
         update.setName(postCategory.getName());

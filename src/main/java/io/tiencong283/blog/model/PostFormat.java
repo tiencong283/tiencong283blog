@@ -18,9 +18,4 @@ public enum PostFormat {
     public String getId() {
         return name();
     }
-
-    @Override
-    public String toString() {
-        return this.displayName;
-    }
 }

@@ -40,7 +40,7 @@ public class CategoryAdminController {
     @RequestMapping(value = "", method = {GET, HEAD})
     public String showCategoryDashboard(Model model) {
         model.addAttribute("category", new PostCategory());
-        return "category-index";
+        return "admin/category-index";
     }
 
     @RequestMapping(value = "", method = {POST})

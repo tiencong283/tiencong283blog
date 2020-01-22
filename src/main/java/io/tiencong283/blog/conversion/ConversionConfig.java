@@ -11,8 +11,9 @@ public class ConversionConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(localDateFormatter());
     }
+
     @Bean
-    public LocalDateFormatter localDateFormatter(){
+    public LocalDateFormatter localDateFormatter() {
         return new LocalDateFormatter();
     }
 }

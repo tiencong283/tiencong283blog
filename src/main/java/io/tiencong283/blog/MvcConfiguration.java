@@ -18,7 +18,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAware {
-
     private ApplicationContext appCtx;
 
     @Override

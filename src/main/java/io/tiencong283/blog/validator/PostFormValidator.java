@@ -1,7 +1,7 @@
 package io.tiencong283.blog.validator;
 
 import io.tiencong283.blog.service.PostService;
-import io.tiencong283.blog.support.PostForm;
+import io.tiencong283.blog.view.PostForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -18,14 +18,14 @@ public class PostFormValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return PostForm.class.equals(aClass.getClass());
+        return PostForm.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
         PostForm postForm = (PostForm) o;
         if (!errors.hasFieldErrors("title") && postService.existsByTitle(postForm.getTitle())) { // distinct post's title
-            errors.reject("title", "postForm.title.dupplicate");
+            errors.rejectValue("title", "postForm.title.duplicate");
         }
     }
 }

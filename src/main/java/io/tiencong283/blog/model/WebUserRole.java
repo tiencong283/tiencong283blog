@@ -4,6 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum WebUserRole {
+    /*
+        ROLE ADMIN can manage posts, users
+        ROLE USER can only post comments
+     */
     USER_ROLE("USER"),
     ADMIN_ROLE("ADMIN");
 
@@ -11,10 +15,5 @@ public enum WebUserRole {
 
     WebUserRole(String roleName) {
         this.roleName = roleName;
-    }
-
-    @Override
-    public String toString() {
-        return this.roleName;
     }
 }

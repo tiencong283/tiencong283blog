@@ -52,17 +52,7 @@ public class Post {
     @Column(unique = true, nullable = true, length = 280)
     private String publicSlug;
 
-    @Column(unique = true, nullable = true)
-    private String adminSlug;
-
     public Post() {
-    }
-
-    public Post(String title, PostCategory category, PostFormat format, String rawContent) {
-        setTitle(title);
-        this.category = category;
-        this.format = format;
-        setRawContent(rawContent);
     }
 
     public void setTitle(String title) {
@@ -112,24 +102,10 @@ public class Post {
         return cleanTitle;
     }
 
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "postID=" + postID +
-                ", title='" + title + '\'' +
-                ", category=" + category +
-                ", author=" + author +
-                ", format=" + format +
-                ", creationDate=" + creationDate +
-                ", publishDate=" + publishDate +
-                ", draft=" + draft +
-                ", rawContent='" + rawContent + '\'' +
-                ", renderedContent='" + renderedContent + '\'' +
-                ", publicSlug='" + publicSlug + '\'' +
-                ", adminSlug='" + adminSlug + '\'' +
-                '}';
+    public String getAdminSlug() {
+        if (this.title == null || this.title.length() == 0) {
+            return "";
+        }
+        return String.format("%d-%s", getPostID(), getSlug());
     }
-
-
 }

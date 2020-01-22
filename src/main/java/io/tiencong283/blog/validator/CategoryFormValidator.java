@@ -30,10 +30,10 @@ public class CategoryFormValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "empty");
         if (categoryService.exists(name)) {  // category name is unique
-            errors.reject("name", "category.name.duplicate");
+            errors.rejectValue("name", "category.name.duplicate");
         }
         if (urlSlug.length() > 0 && categoryService.exists(urlSlug)) { // category urlSlug is unique too
-            errors.reject("name", "category.urlSlug.duplicate");
+            errors.rejectValue("name", "category.urlSlug.duplicate");
         }
     }
 }
