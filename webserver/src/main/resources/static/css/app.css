@@ -1,0 +1,69 @@
+html, body {
+    position: relative;
+}
+
+body {
+    background-color: silver;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.button {
+    margin: 0;
+}
+
+.has-error-color {
+    color: #c60f13;
+}
+
+.input-group-label {
+    background-color: transparent;
+}
+
+/* common styles */
+.main-container {
+    margin-top: 10px;
+    background-color: whitesmoke;
+    box-shadow: 0 1px 5px grey;
+
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+/* authentication form */
+.auth-form .input-group-label i {
+    font-size: 21px;
+}
+
+.has-error {
+    border-color: #c60f13;
+}
+
+.auth-form {
+    margin-top: 40px;
+}
+
+.auth-form-row {
+    min-height: 75px;
+}
+
+.auth-button-wrapper {
+    margin-top: 20px;
+}
+
+#login-form {
+    width: 40%;
+    min-width: 300px;
+}
+
+/* new post form */
+#newpost-form #rawContent {
+    height: 400px;
+    resize: vertical;
+}
