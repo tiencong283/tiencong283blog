@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home | Tiencong283Blog</title>
+    <div th:include="_header :: common-css" th:remove="tag"></div>
+</head>
+<body>
+
+<div class="site-container grid-container">
+    <div th:replace="_header :: site-header"></div>
+    <div th:replace="_header :: site-search-bar"></div>
+
+    <!-- site content goes here -->
+    <div class="site-content-wrapper">
+        <div class="inner">
+            <h2 class="site-content-heading">All posts</h2>
+            <div class="site-content"></div>
+        </div>
+    </div>
+    <div th:replace="_footer :: site-footer"></div>
+</div>
+
+<div th:include="_footer::common-js" th:remove="tag"></div>
+</body>
+</html>

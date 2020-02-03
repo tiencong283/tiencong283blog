@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,17 +38,17 @@ public class PostView {
                 .map(post -> PostView.of(post)).collect(Collectors.toList());
     }
 
-    // preview path
-    public String getPath() {
-        return "";
+    // details post path
+    public String getPublicPath() {
+        return getPublicSlug();
     }
 
-    // edit post absolute path
+    // edit post path
     public String getEditPath() {
         return String.format("/admin/blog/post/%s/edit", getAdminSlug());
     }
 
-    // delete post absolute path
+    // delete post path
     public String getUpdatePath() {
         return "/admin/blog/post/" + getAdminSlug();
     }
@@ -63,6 +63,11 @@ public class PostView {
     }
 
     // PostView is wrapper of post with some centralized config infos
+
+    public Post getPost() {
+        return post;
+    }
+
     public String getTitle() {
         return post.getTitle();
     }
@@ -79,16 +84,28 @@ public class PostView {
         return post.getFormat();
     }
 
-    public LocalDate getCreationDate() {
+    public boolean isDraft() {
+        return post.isDraft();
+    }
+
+    public LocalDateTime getCreationDate() {
         return post.getCreationDate();
     }
 
-    public LocalDate getPublishDate() {
+    public LocalDateTime getPublishDate() {
         return post.getPublishDate();
     }
 
     public String getRawContent() {
         return post.getRawContent();
+    }
+
+    public String getRenderedContent() {
+        return post.getRenderedContent();
+    }
+
+    public String getSummary() {
+        return post.getSummary();
     }
 
     public String getPublicSlug() {

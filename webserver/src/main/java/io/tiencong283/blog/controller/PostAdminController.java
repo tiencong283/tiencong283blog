@@ -26,10 +26,10 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
-
 @Controller
 @RequestMapping("/admin/blog/post")
 public class PostAdminController {
+    // servicess
     private PostService postService;
     private PostCategoryService categoryService;
     private PostFormValidator postFormValidator;
@@ -39,17 +39,14 @@ public class PostAdminController {
     public void setPostService(PostService postService) {
         this.postService = postService;
     }
-
     @Autowired
     public void setCategoryService(PostCategoryService categoryService) {
         this.categoryService = categoryService;
     }
-
     @Autowired
     public void setPageableFactory(PageableFactory pageableFactory) {
         this.pageableFactory = pageableFactory;
     }
-
     @Autowired
     public void setPostFormValidator(PostFormValidator postFormValidator) {
         this.postFormValidator = postFormValidator;
@@ -62,7 +59,7 @@ public class PostAdminController {
         model.addAttribute("categories", categories);
         model.addAttribute("formats", PostFormat.values());
     }
-
+    // controllers
     @RequestMapping(path = "", method = {GET, HEAD})
     public String showDashboard(Model model, @RequestParam(defaultValue = "1") int page, HttpServletRequest request) {
         Page<PostView> publishedPosts = PostView.pageOf(postService.getPublishedPosts(pageableFactory.forDashboard(page)));
@@ -96,25 +93,24 @@ public class PostAdminController {
 
     @RequestMapping(path = "/{postID:\\d+}{slug}/edit", method = {GET, HEAD})
     public String editPost(Model model, @PathVariable int postID, @PathVariable String slug) {
-        Post post = postService.getPost(postID);
-        PostForm postForm = new PostForm(post);
-        model.addAttribute("postForm", postForm);
-        model.addAttribute("path", String.format("/admin/blog/post/%s", post.getAdminSlug()));
+        PostView post = PostView.of(postService.getPost(postID));
+
+        model.addAttribute("postForm", new PostForm(post));
+        model.addAttribute("path", post.getUpdatePath());
         return "admin/post-edit";
     }
 
     @PostMapping("/{postID:\\d+}{slug}")
-    @ResponseBody
     public String updatePost(Model model, @PathVariable int postID, @PathVariable String slug, @Valid PostForm postForm, BindingResult errors) {
-        Post post = postService.getPost(postID);
-        if (!postForm.getTitle().equals(post.getTitle())) {
+        PostView post = PostView.of(postService.getPost(postID));
+        if (!postForm.getTitle().equals(post.getTitle())) { // avoid duplicate itself
             postFormValidator.validate(postForm, errors);
         }
         if (errors.hasErrors()) {
             return "admin/post-edit";
         }
-        postService.updatePost(post, postForm);
-        return String.format("redirect:/admin/blog/post/%s/edit", post.getAdminSlug());
+        postService.updatePost(post.getPost(), postForm);
+        return "redirect:" + post.getEditPath();
     }
 
     @PostMapping(path = "/{postID:\\d+}{slug}", params = "_action=DELETE")

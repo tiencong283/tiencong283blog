@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.text.Normalizer;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Setter
@@ -35,10 +35,10 @@ public class Post {
     private PostFormat format;
 
     @Column(nullable = false)
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(nullable = true)
-    private LocalDate publishDate;
+    private LocalDateTime publishDate;
 
     @Column(nullable = false)
     private boolean draft = true;
@@ -48,6 +48,9 @@ public class Post {
 
     @Column(nullable = true, columnDefinition = "text")
     private String renderedContent;
+
+    @Column(nullable = true, columnDefinition = "text")
+    private String summary;
 
     @Column(unique = true, nullable = true, length = 280)
     private String publicSlug;
@@ -67,7 +70,7 @@ public class Post {
         this.renderedContent = StringUtils.trimWhitespace(renderedContent);
     }
 
-    public void setPublishDate(LocalDate publishDate) {
+    public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
         publicSlug = this.publishDate == null ? null : generatePublicSlug();
     }

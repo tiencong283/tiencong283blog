@@ -24,8 +24,7 @@ public class InitModel implements CommandLineRunner {
         // add categories
         postCategoryService.addCategory(new PostCategory("Reversing"));
         postCategoryService.addCategory(new PostCategory("Exploitation"));
-        postCategoryService.addCategory(new PostCategory("Networking"));
-        postCategoryService.addCategory(new PostCategory("Data-mining"));
+        postCategoryService.addCategory(new PostCategory("Data mining"));
 
         // add users
         userService.addUser(new WebUser("tiencong283", "password", "tiencong283@outlook.com"));

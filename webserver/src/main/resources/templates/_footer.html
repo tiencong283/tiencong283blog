@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
+<!-- common js -->
 <div th:fragment="common-js">
+
     <script th:src="@{/resources/js/vendor/jquery.js}"></script>
     <script th:src="@{/resources/js/vendor/what-input.js}"></script>
-    <script th:src="@{/resources/js/vendor/foundation.js}"></script>
+    <script th:src="@{/resources/js/vendor/foundation.min.js}"></script>
     <script th:src="@{/resources/js/app.js}"></script>
 </div>
+
+<!-- site footer -->
+<footer class="site-footer" th:fragment="site-footer">
+    <div class="inner flex-container align-justify align-middle">
+        <div id="copyright"><a href="#">Tiencong283blog</a> &copy; 2020</div>
+        <div id="social-links">
+            <span><a href="https://www.facebook.com/tiencong283w">Facebook</a></span>
+            <span><a href="https://github.com/tiencong283/tiencong283blog">Github</a></span>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

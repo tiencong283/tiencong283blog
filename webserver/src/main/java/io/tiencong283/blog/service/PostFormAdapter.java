@@ -5,27 +5,41 @@ import io.tiencong283.blog.view.PostForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class PostFormAdapter {
     private UserService userService;
+    private MarkupRenderer markupRenderer;
+    private PostSummary postSummary;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
+    @Autowired
+    public void setMarkupRenderer(MarkupRenderer markupRenderer) {
+        this.markupRenderer = markupRenderer;
+    }
+    @Autowired
+    public void setPostSummary(PostSummary postSummary) {
+        this.postSummary = postSummary;
+    }
 
     public Post createPostFromPostForm(PostForm postForm, String username) {
         Post post = new Post();
-        post.setCreationDate(LocalDate.now());
+        post.setCreationDate(LocalDateTime.now());
         post.setAuthor(userService.loadUserByUsername(username));
         setCommonProperties(post, postForm);
+        refreshPostContent(post);
         return post;
     }
 
     public Post updatePostFromPostForm(Post post, PostForm postForm) {
         setCommonProperties(post, postForm);
+        if (!postForm.getRawContent().equals(post.getRawContent())){
+            refreshPostContent(post);
+        }
         return post;
     }
 
@@ -35,13 +49,21 @@ public class PostFormAdapter {
         post.setFormat(postForm.getFormat());
         post.setRawContent(postForm.getRawContent());
         post.setDraft(postForm.isDraft());
-        post.setPublishDate(publishDate(postForm));
+        // only set publish date for published posts
+        if (!postForm.isDraft())
+            setPublishDate(post, postForm);
     }
 
-    private LocalDate publishDate(PostForm postForm) {
-        if (postForm.isDraft()) {
-            return null;
-        }
-        return postForm.getPublishDate() == null ? LocalDate.now() : postForm.getPublishDate();
+    private void setPublishDate(Post post, PostForm postForm) {
+        if (postForm.getPublishDate() == null)
+            post.setPublishDate(LocalDateTime.now());
+        // in case users update the publish date
+        else if (!post.getPublishDate().toLocalDate().isEqual(postForm.getPublishDate().toLocalDate()))
+            postForm.setPublishDate(postForm.getPublishDate());
+    }
+
+    private void refreshPostContent(Post post){
+        post.setRenderedContent(markupRenderer.render(post.getRawContent(), post.getFormat()));
+        post.setSummary(postSummary.forContent(post.getRenderedContent()));
     }
 }

@@ -1,0 +1,161 @@
+$nav-background-color: rgb(44, 56, 64);
+$nav-item-border-color: #3B4951;
+$nav-item-hover-background-color: #41525e;
+
+body {
+  background-color: silver;
+  font-family: sans-serif;
+}
+a, a:hover {
+  color: inherit;
+}
+button:hover {
+  cursor: pointer;
+}
+.site-container {
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: whitesmoke;
+  box-shadow: 0 1px 5px grey;
+}
+.inner {
+  margin: 0 8px;
+}
+
+// header
+.site-header, .site-footer{
+  background-color: $nav-background-color;
+  color: white;
+}
+.site-header-nav {
+  border-left: 1px solid $nav-item-border-color;
+  li {
+    padding: 2.5px 0;
+    border-right: 1px solid $nav-item-border-color;
+  }
+  li:hover {
+    background-color: $nav-item-hover-background-color;
+  }
+  .menu {
+    border: 1px solid $nav-item-border-color;
+  }
+}
+
+// footer
+.site-footer {
+  padding: 4px 0;
+
+  .inner {
+    flex-wrap: wrap;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+#social-links span {
+  margin-left: 14px;
+}
+#social-links span:first-child::after {
+  content: "";
+  display: inline-block;
+  position: relative;
+  left: 10px;
+  bottom: 2px;
+  background-color: white;
+  width: 4px;
+  height: 4px;
+  border-radius: 100%;
+}
+// search bar
+.site-search-bar input{
+  padding-left: 40px;
+  background-image: url("../images/search.svg");
+  background-position: 8px center;
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+}
+.site-content {
+  margin-bottom: 20px;
+}
+.site-content-heading {
+  font-size: 24px;
+  display: inline-block;
+  border-bottom: 1px solid #3B4951;
+  margin-bottom: 40px;
+}
+.post-listing .post:last-child {
+  border-bottom: none;
+}
+.post {
+  border-bottom: 1px dotted #3B4951;
+  margin-bottom: 18px;
+
+  .post-metadata {
+    font-family: "Open Sans", sans-serif;
+    color: rgb(125, 151, 173);
+    font-size: 14px;
+  }
+  .post-category:hover {
+    text-decoration: underline;
+  }
+  .post-title {
+    font-family: "Linux Libertine", "Georgia", "Times", serif;
+    font-size: 21px;
+  }
+  // its styles from wikipedia for focus reading
+  .post-summary{
+    color: rgb(34, 34, 34);
+    h1,h2,h3,h4,h5,h6 { // headings not shown in preview
+      display: none;
+    }
+    a {
+      color: #0645ad;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a, p{
+      font-size: 14px;
+    }
+    .read-more {
+      display: inline-block;
+      padding: 8px 0;
+    }
+  }
+}
+// common form styles
+.has-error {
+  border-color: #c60f13;
+}
+
+.has-error-color {
+  color: #c60f13;
+}
+
+// authentication form styles
+.input-group-label {
+  background-color: transparent;
+}
+
+.auth-form {
+  .auth-form-row {
+    min-height: 75px;
+  }
+  .input-group-label i {
+    font-size: 21px;
+  }
+  .auth-button-wrapper {
+    margin-top: 20px;
+  }
+}
+
+#login-form {
+  width: 40%;
+  min-width: 300px;
+}
+
+// new post form styles
+#newpost-form #rawContent {
+  height: 400px;
+  resize: vertical;
+}

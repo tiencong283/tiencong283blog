@@ -1,5 +1,6 @@
 package io.tiencong283.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
@@ -23,6 +24,7 @@ public class PostCategory implements Comparable<PostCategory> {
     private String urlSlug;
 
     // bidirectional mapping
+    @JsonIgnore
     @OneToMany(mappedBy = "category", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Post> posts = new ArrayList<>();
 
@@ -36,7 +38,10 @@ public class PostCategory implements Comparable<PostCategory> {
 
     public PostCategory(String name, String urlSlug) {
         this.setName(name);
-        this.setUrlSlug(urlSlug);
+        this.setUrlSlug(generateUrlSlug(name));
+    }
+    public String getPublicPath(){
+        return "/category/" + this.urlSlug;
     }
 
     public int countPosts() {
@@ -50,7 +55,10 @@ public class PostCategory implements Comparable<PostCategory> {
     public void setUrlSlug(String urlSlug) {
         this.urlSlug = StringUtils.trimWhitespace(urlSlug);
     }
-
+    // return the string with spaces replaced by hyphen (windows programming -> windows-programming)
+    public String generateUrlSlug(String name){
+        return String.join("-", name.split("\\s+"));
+    }
     @Override
     public int compareTo(PostCategory postCategory) {
         return this.categoryID - postCategory.categoryID;   // sort by categoryID

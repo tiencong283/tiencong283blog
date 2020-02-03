@@ -9,11 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class ConversionConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(localDateFormatter());
+        registry.addFormatter(localDateTimeFormatter());
     }
 
     @Bean
-    public LocalDateFormatter localDateFormatter() {
-        return new LocalDateFormatter();
+    public LocalDateTimeFormatter localDateTimeFormatter() {
+        return new LocalDateTimeFormatter();
     }
 }

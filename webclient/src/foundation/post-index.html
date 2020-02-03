@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Post Dashboard | Tiencong283Blog</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="foundation-icons/foundation-icons.css">
+</head>
+<body>
+
+<div class="site-container grid-container">
+  <!-- site header -->
+  <header class="site-header">
+    <div class="top-bar inner">
+      <div class="top-bar-left">
+        <i class="fi-home"></i><span><a href=""> Home</a></span>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu dropdown site-header-nav" data-dropdown-menu>
+          <li>
+            <a href="/login.html">Category</a>
+            <!-- category dropdown -->
+            <ul class="menu">
+              <li><a href="#">Reversing</a></li>
+              <li><a href="#">Exploitation</a></li>
+              <li><a href="#">Linux programming</a></li>
+              <li><a href="#">Windows programming</a></li>
+            </ul>
+          </li>
+          <li><a href="/login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <section class="site-search-bar">
+    <div class="inner">
+      <input type="search" placeholder="search for an article">
+    </div>
+  </section>
+
+  <!-- site content goes here -->
+  <div class="site-content-wrapper">
+    <div class="inner">
+      <h2 class="site-content-heading">Post dashboard</h2>
+      <div class="site-content" id="admin-post-list">
+      <div>
+        <h4>Published Posts</h4>
+        <table class="unstriped">
+          <thead>
+          <tr>
+            <th style="width: 180px">published at</th>
+            <th>title</th>
+            <th style="width: 100px">category</th>
+            <th style="width: 100px">author</th>
+            <th style="width: 170px"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>February 03, 2020</td>
+            <td>Introducing the Intro to Machine Learning with TensorFlow Nanodegree Program</td>
+            <td>Reversing</td>
+            <td>tiencong283</td>
+            <td>
+              <a class="button tiny" href="#">View</a>
+              <a class="button tiny" href="/admin/blog/post/1-introducing-the-intro-to-machine-learning-with-tensorflow-nanodegree-program/edit">Edit</a>
+              <form class="display-inline-block" method="POST" action="/admin/blog/post/1-introducing-the-intro-to-machine-learning-with-tensorflow-nanodegree-program">
+                <input name="_action" type="hidden" value="DELETE">
+                <button class="button tiny" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- pagination for published posts-->
+
+        <div>
+          <h4>Draft Posts</h4>
+          <table class="unstriped">
+            <thead>
+            <tr>
+              <th style="width: 180px">created at</th>
+              <th>title</th>
+              <th style="width: 100px">category</th>
+              <th style="width: 100px">author</th>
+              <th style="width: 170px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>February 03, 2020</td>
+              <td>Creating a Window</td>
+              <td>Exploitation</td>
+              <td>tiencong283</td>
+              <td>
+                <a class="button tiny" href="#">View</a>
+                <a class="button tiny" href="/admin/blog/post/2-creating-a-window/edit">Edit</a>
+                <form class="display-inline-block" method="POST" action="/admin/blog/post/2-creating-a-window">
+                  <input name="_action" type="hidden" value="DELETE">
+                  <button class="button tiny" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="button tiny"><a href="/admin/blog/post/new">Create new post</a></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- site footer -->
+  <footer class="site-footer">
+    <div class="inner flex-container align-justify align-middle">
+      <div id="copyright"><a href="#">Tiencong283blog</a> &copy; 2020</div>
+      <div id="social-links">
+        <span><a href="https://www.facebook.com/tiencong283w">Facebook</a></span>
+        <span><a href="https://github.com/tiencong283">Github</a></span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/what-input.js"></script>
+<script src="js/vendor/foundation.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
+
+<!-- common css -->
 <div th:fragment="common-css">
-    <link rel="stylesheet" th:href="@{/resources/css/foundation.css}">
     <link rel="stylesheet" th:href="@{/resources/css/app.css}">
     <link rel="stylesheet" th:href="@{/resources/foundation-icons/foundation-icons.css}">
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/5e5e5ea7e4.js"></script>
 </div>
+
+<!-- site header -->
+<header class="site-header" th:fragment="site-header">
+    <div class="top-bar inner">
+        <div class="top-bar-left">
+            <i class="fi-home"></i><span><a href=""> Home</a></span>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu dropdown site-header-nav" data-dropdown-menu>
+                <li>
+                    <a href="#">Category</a>
+                    <!-- category dropdown -->
+                    <ul class="menu">
+                        <li th:each="category: ${categories}"><a href="#" th:text="${category.name}">Reversing</a></li>
+                    </ul>
+                </li>
+                <li><a th:href="@{/login.html}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<section class="site-search-bar" th:fragment="site-search-bar">
+    <div class="inner">
+        <input type="search" placeholder="search for an article">
+    </div>
+</section>
+
 </body>
 </html>

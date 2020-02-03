@@ -1,87 +1,88 @@
 <!DOCTYPE html>
+<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>New Post | tiencong283</title>
-    <div th:include="_header :: common-css"></div>
+    <title>Edit Post | Tiencong283Blog</title>
+    <div th:include="_header :: common-css" th:remove="tag"></div>
 </head>
-
 <body>
-<div class="grid-container main-container">
 
-    <nav>
-        <ul class="breadcrumbs">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Admin</a></li>
-            <li><a href="#">Blog</a></li>
-            <li class="disabled">Edit Post</li>
-        </ul>
+<div class="site-container grid-container">
+    <div th:replace="_header :: site-header"></div>
+    <div th:replace="_header :: site-search-bar"></div>
 
-        <div class="newpost-form-wrapper">
-            <form id="newpost-form" method="POST" th:action="@{${path}}" th:object="${postForm}">
-                <div class="grid-x grid-margin-x">
-                    <div class="cell medium-9">
-                        <div>
-                            <label for="title">Title: <span class="has-error-color"
-                                                            th:if="${#fields.hasErrors('title')}"
-                                                            th:text="${#fields.errors('title').get(0)}"></span></label>
-                            <input id="title" th:errorclass="has-error" th:field="*{title}" type="text">
-                        </div>
-                        <div>
-                            <label for="rawContent">Content: <span class="has-error-color"
-                                                                   th:if="${#fields.hasErrors('rawContent')}"
-                                                                   th:text="${#fields.errors('rawContent').get(0)}"></span></label>
-                            <textarea id="rawContent" th:field="*{rawContent}"></textarea>
-                        </div>
-
-                        <div class="flex-container align-justify margin-top-1">
+    <!-- site content goes here -->
+    <div class="site-content-wrapper">
+        <div class="inner">
+            <h2 class="site-content-heading">Edit Post</h2>
+            <div class="site-content">
+                <form id="newpost-form" method="POST" th:action="@{${path}}" th:object="${postForm}">
+                    <div class="grid-x grid-margin-x">
+                        <div class="cell medium-9">
                             <div>
-                                <button class="button small" type="submit">update</button>
-                                <a class="button small" th:href="@{#}" th:if="*{draft}">preview</a>
+                                <label for="title">Title: <span class="has-error-color"
+                                                                th:if="${#fields.hasErrors('title')}"
+                                                                th:text="${#fields.errors('title').get(0)}"></span></label>
+                                <input id="title" th:errorclass="has-error" th:field="*{title}" type="text">
                             </div>
-                            <button class="button small" name="draft" th:if="*{draft}" type="submit" value="false">
-                                publish
-                            </button>
-                            <button class="button small" name="draft" th:if="*{!draft}" type="submit" value="true">
-                                unpublish
-                            </button>
-                        </div>
-                    </div>
-                    <div class="cell medium-3">
-                        <div>
-                            <label for="category">Category: </label>
-                            <select id="category" name="" th:disabled="${#lists.size(categories)} == 1"
-                                    th:field="*{category}">
-                                <option th:each="category: ${categories}" th:text="${category.name}"
-                                        th:value="${category.categoryID}">Reversing
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="format">Format: </label>
-                            <select id="format" name="" th:disabled="${#arrays.length(formats)} == 1"
-                                    th:field="*{format}">
-                                <option th:each="format: ${formats}" th:text="${format.displayName}"
-                                        th:value="${format.id}">Markdown
-                                </option>
-                            </select>
-                        </div>
+                            <div>
+                                <label for="rawContent">Content: <span class="has-error-color"
+                                                                       th:if="${#fields.hasErrors('rawContent')}"
+                                                                       th:text="${#fields.errors('rawContent').get(0)}"></span></label>
+                                <textarea id="rawContent" th:field="*{rawContent}"></textarea>
+                            </div>
 
-                        <div class="margin-top-1">
-                            <label for="publishDate">Publish Date: <span th:class="has-error-color"
-                                                                         th:if="${#fields.hasErrors('publishDate')}"
-                                                                         th:text="${#fields.errors('publishDate').get(0)}"></span></label>
-                            <input id="publishDate" placeholder="pick a date" th:errorclass="has-error" th:field="*{publishDate}"
-                                   type="text">
+                            <div class="flex-container align-justify margin-top-1">
+                                <div>
+                                    <button class="button small" type="submit" name="draft" th:value="*{draft}">update</button>
+                                    <a class="button small">preview</a>
+                                </div>
+                                <button class="button small" name="draft" th:if="*{draft}" type="submit" value="false">
+                                    publish
+                                </button>
+                                <button class="button small" name="draft" th:if="*{!draft}" type="submit" value="true">
+                                    unpublish
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cell medium-3">
+                            <div>
+                                <label for="category">Category: </label>
+                                <select id="category" name="" th:disabled="${#lists.size(categories)} == 1"
+                                        th:field="*{category}">
+                                    <option th:each="category: ${categories}" th:text="${category.name}"
+                                            th:value="${category.categoryID}">Reversing
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="format">Format: </label>
+                                <select id="format" name="" th:disabled="${#arrays.length(formats)} == 1"
+                                        th:field="*{format}">
+                                    <option th:each="format: ${formats}" th:text="${format.displayName}"
+                                            th:value="${format.id}">Markdown
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="margin-top-1">
+                                <label for="publishDate">Publish Date: <span th:class="has-error-color"
+                                                                             th:if="${#fields.hasErrors('publishDate')}"
+                                                                             th:text="${#fields.errors('publishDate').get(0)}"></span></label>
+                                <input id="publishDate" placeholder="pick a date" th:errorclass="has-error" th:field="*{publishDate}"
+                                       type="text">
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </nav>
-
+    </div>
+    <div th:replace="_footer :: site-footer"></div>
 </div>
-<div th:include="_footer::common-js"></div>
+
+<div th:include="_footer::common-js" th:remove="tag"></div>
 </body>
 </html>

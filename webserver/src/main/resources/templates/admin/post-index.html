@@ -1,100 +1,104 @@
 <!DOCTYPE html>
+<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Post Dashboard | tiencong283</title>
-    <div th:include="_header :: common-css"></div>
+    <title>Post Dashboard | Tiencong283Blog</title>
+    <div th:include="_header :: common-css" th:remove="tag"></div>
 </head>
-
 <body>
-<div class="grid-container main-container">
 
-    <nav>
-        <ul class="breadcrumbs">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Admin</a></li>
-            <li><a href="#">Blog</a></li>
-            <li class="disabled">Post</li>
-        </ul>
-    </nav>
-    <div id="admin-post-list"
-         th:with="hasPublishedPosts=${posts!= null && !posts.isEmpty()}, hasDraftPosts=${draftPosts != null && !draftPosts.isEmpty()}">
-        <h4>Published Posts</h4>
-        <p th:unless="${hasPublishedPosts}">No posts yet</p>
-        <table class="unstriped" th:if="${hasPublishedPosts}">
-            <thead>
-            <tr>
-                <th style="width: 150px">published at</th>
-                <th>title</th>
-                <th style="width: 100px">category</th>
-                <th style="width: 100px">author</th>
-                <th style="width: 170px"></th>
-            </tr>
-            </thead>
+<div class="site-container grid-container">
+    <div th:replace="_header :: site-header"></div>
+    <div th:replace="_header :: site-search-bar"></div>
 
-            <tbody>
-            <tr th:each="post : ${posts}">
-                <td th:text="${post.formattedPublishDate}"></td>
-                <td th:text="${post.title}"></td>
-                <td th:text="${post.category.name}"></td>
-                <td th:text="${post.author.username}"></td>
-                <td th:fragment="post-actions">
-                    <a class="button tiny" href="#">View</a>
-                    <a class="button tiny" th:href="@{${post.editPath}}">Edit</a>
-                    <form class="display-inline-block" method="POST" th:action="@{${post.updatePath}}">
-                        <input name="_action" type="hidden" value="DELETE">
-                        <button class="button tiny" type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <!-- site content goes here -->
+    <div class="site-content-wrapper">
+        <div class="inner">
+            <h2 class="site-content-heading">Post Dashboard</h2>
+            <div class="site-content" id="admin-post-list"
+                 th:with="hasPublishedPosts=${posts!= null && !posts.isEmpty()}, hasDraftPosts=${draftPosts != null && !draftPosts.isEmpty()}">
+                <h4>Published Posts</h4>
+                <p th:unless="${hasPublishedPosts}">No posts yet</p>
+                <table class="unstriped" th:if="${hasPublishedPosts}">
+                    <thead>
+                    <tr>
+                        <th style="width: 180px">published at</th>
+                        <th>title</th>
+                        <th style="width: 200px">category</th>
+                        <th style="width: 100px">author</th>
+                        <th style="width: 170px"></th>
+                    </tr>
+                    </thead>
 
-        <!-- pagination for published posts-->
-        <nav th:if="${paginationInfo.isVisible()}">
-            <ul class="pagination">
-                <li class="pagination-previous" th:classappend="${!paginationInfo.isPreviousVisible()}? 'disabled'">
-                    <a th:href="@{${paginationInfo.getPreviousPagePath()}}"
-                       th:if="${paginationInfo.isPreviousVisible()}">Previous</a>
-                    <span th:unless="${paginationInfo.isPreviousVisible()}">Previous</span>
-                </li>
-                <li aria-hidden="true" class="ellipsis"></li>
-                <li class="pagination-next" th:classappend="${!paginationInfo.isNextVisible()}? 'disabled'">
-                    <a th:href="@{${paginationInfo.getNextPagePath()}}"
-                       th:if="${paginationInfo.isNextVisible()}">Next</a>
-                    <span th:unless="${paginationInfo.isNextVisible()}">Next</span>
-                </li>
-            </ul>
-        </nav>
+                    <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td th:text="${post.formattedPublishDate}"></td>
+                        <td th:text="${post.title}"></td>
+                        <td th:text="${post.category.name}"></td>
+                        <td th:text="${post.author.username}"></td>
+                        <td th:fragment="post-actions">
+                            <a class="button tiny" href="#">View</a>
+                            <a class="button tiny" th:href="@{${post.editPath}}">Edit</a>
+                            <form class="display-inline-block" method="POST" th:action="@{${post.updatePath}}">
+                                <input name="_action" type="hidden" value="DELETE">
+                                <button class="button tiny" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
-        <div th:if="${hasDraftPosts}">
-            <h4>Draft Posts</h4>
-            <p th:unless="${hasDraftPosts}">No posts yet</p>
-            <table class="unstriped" th:if="${hasDraftPosts}">
-                <thead>
-                <tr>
-                    <th style="width: 150px">created at</th>
-                    <th>title</th>
-                    <th style="width: 100px">category</th>
-                    <th style="width: 100px">author</th>
-                    <th style="width: 170px"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="post : ${draftPosts}">
-                    <td th:text="${post.formattedCreationDate}"></td>
-                    <td th:text="${post.title}"></td>
-                    <td th:text="${post.category.name}"></td>
-                    <td th:text="${post.author.username}"></td>
-                    <td th:include="admin/post-index::post-actions"></td>
-                </tr>
-                </tbody>
-            </table>
+                <!-- pagination for published posts-->
+                <nav th:if="${paginationInfo.isVisible()}">
+                    <ul class="pagination">
+                        <li class="pagination-previous" th:classappend="${!paginationInfo.isPreviousVisible()}? 'disabled'">
+                            <a th:href="@{${paginationInfo.getPreviousPagePath()}}"
+                               th:if="${paginationInfo.isPreviousVisible()}">Previous</a>
+                            <span th:unless="${paginationInfo.isPreviousVisible()}">Previous</span>
+                        </li>
+                        <li aria-hidden="true" class="ellipsis"></li>
+                        <li class="pagination-next" th:classappend="${!paginationInfo.isNextVisible()}? 'disabled'">
+                            <a th:href="@{${paginationInfo.getNextPagePath()}}"
+                               th:if="${paginationInfo.isNextVisible()}">Next</a>
+                            <span th:unless="${paginationInfo.isNextVisible()}">Next</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div th:if="${hasDraftPosts}">
+                    <h4>Draft Posts</h4>
+                    <p th:unless="${hasDraftPosts}">No posts yet</p>
+                    <table class="unstriped" th:if="${hasDraftPosts}">
+                        <thead>
+                        <tr>
+                            <th style="width: 180px">created at</th>
+                            <th>title</th>
+                            <th style="width: 200px">category</th>
+                            <th style="width: 100px">author</th>
+                            <th style="width: 170px"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="post : ${draftPosts}">
+                            <td th:text="${post.formattedCreationDate}"></td>
+                            <td th:text="${post.title}"></td>
+                            <td th:text="${post.category.name}"></td>
+                            <td th:text="${post.author.username}"></td>
+                            <td th:include="admin/post-index::post-actions"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button class="button tiny"><a href="/admin/blog/post/new">Create new post</a></button>
+            </div>
         </div>
-        <a href="/admin/blog/post/new" th:href="@{/admin/blog/post/new}">Create new post</a>
     </div>
+    <div th:replace="_footer :: site-footer"></div>
 </div>
-<div th:include="_footer::common-js"></div>
+
+<div th:include="_footer::common-js" th:remove="tag"></div>
 </body>
 </html>
