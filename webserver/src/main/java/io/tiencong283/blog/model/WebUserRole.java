@@ -8,12 +8,17 @@ public enum WebUserRole {
         ROLE ADMIN can manage posts, users
         ROLE USER can only post comments
      */
-    USER_ROLE("USER"),
-    ADMIN_ROLE("ADMIN");
+    ROLE_USER("USER"),
+    ROLE_ADMIN("ADMIN");
 
     private String roleName;
 
     WebUserRole(String roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return roleName;
     }
 }

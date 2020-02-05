@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tiencong283blog</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="foundation-icons/foundation-icons.css">
+</head>
+<body>
+
+<div class="site-container grid-container">
+  <!-- site header -->
+  <header class="site-header">
+    <div class="top-bar inner">
+      <div class="top-bar-left">
+        <i class="fi-home"></i><span><a href=""> Home</a></span>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu dropdown site-header-nav" data-dropdown-menu>
+          <li>
+            <a href="/login.html">Category</a>
+            <!-- category dropdown -->
+            <ul class="menu">
+              <li><a href="#">Reversing</a></li>
+              <li><a href="#">Exploitation</a></li>
+              <li><a href="#">Linux programming</a></li>
+              <li><a href="#">Windows programming</a></li>
+            </ul>
+          </li>
+          <li><a href="/login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <section class="site-search-bar">
+    <div class="inner">
+      <input type="search" placeholder="search for an article">
+    </div>
+  </section>
+
+  <!-- site content goes here -->
+  <div class="site-content-wrapper">
+    <div class="inner">
+      <h2 class="site-content-heading">Post dashboard</h2>
+      <div class="site-content">
+        <div class="post-content"><h1><a href="#creating-a-window"></a>Creating a Window</h1>
+          <h2><a href="#window-classes"></a>Window Classes</h2>
+          <p>A <em>window class</em> defines a set of behaviors that several windows might have in common. For example, in a group of buttons, each button has a similar behavior when the user clicks the button. Of course, buttons are not completely identical; each button displays its own text string and has its own screen coordinates. Data that is unique for each window is called <em>instance data</em>.</p>
+          <p>Every window must be associated with a window class, even if your program only ever creates one instance of that class. It is important to understand that a window class is not a "class" in the C++ sense. Rather, it is a data structure used internally by the operating system. Window classes are registered with the system at run time. To register a new window class, start by filling in a <a href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassa"><strong>WNDCLASS</strong></a> structure:</p>
+          <pre><code class="language-C++">// Register the window class.
+const wchar_t CLASS_NAME[]  = L"Sample Window Class";
+
+WNDCLASS wc = { };
+
+wc.lpfnWndProc   = WindowProc;
+wc.hInstance     = hInstance;
+wc.lpszClassName = CLASS_NAME;
+</code></pre>
+          <p>You must set the following structure members:</p>
+          <ul>
+            <li><strong>lpfnWndProc</strong> is a pointer to an application-defined function called the <em>window procedure</em> or "window proc." The window procedure defines most of the behavior of the window. We'll examine the window procedure in detail later. For now, just treat this as a forward reference.</li>
+            <li><strong>hInstance</strong> is the handle to the application instance. Get this value from the <em>hInstance</em> parameter of <strong>wWinMain</strong>.</li>
+            <li><strong>lpszClassName</strong> is a string that identifies the window class.</li>
+          </ul>
+          <p>Class names are local to the current process, so the name only needs to be unique within the process. However, the standard Windows controls also have classes. If you use any of those controls, you must pick class names that do not conflict with the control class names. For example, the window class for the button control is named "Button".</p>
+          <p>The <a href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassa"><strong>WNDCLASS</strong></a> structure has other members not shown here. You can set them to zero, as shown in this example, or fill them in. The MSDN documentation describes the structure in detail.</p>
+          <p>Next, pass the address of the <a href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassa"><strong>WNDCLASS</strong></a> structure to the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-registerclassa"><strong>RegisterClass</strong></a> function. This function registers the window class with the operating system.</p>
+          <pre><code class="language-C++">RegisterClass(&amp;wc);
+</code></pre>
+          <h2><a href="#creating-the-window"></a>Creating the Window</h2>
+          <p>To create a new instance of a window, call the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-createwindowexa"><strong>CreateWindowEx</strong></a> function:</p>
+          <pre><code class="language-C++">HWND hwnd = CreateWindowEx(
+    0,                              // Optional window styles.
+    CLASS_NAME,                     // Window class
+    L"Learn to Program Windows",    // Window text
+    WS_OVERLAPPEDWINDOW,            // Window style
+
+    // Size and position
+    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+
+    NULL,       // Parent window
+    NULL,       // Menu
+    hInstance,  // Instance handle
+    NULL        // Additional application data
+    );
+
+if (hwnd == NULL)
+{
+    return 0;
+}
+</code></pre>
+          <p>You can read detailed parameter descriptions on MSDN, but here is a quick summary:</p>
+          <ul>
+            <li>The first parameter lets you specify some optional behaviors for the window (for example, transparent windows). Set this parameter to zero for the default behaviors.</li>
+            <li><code>CLASS_NAME</code> is the name of the window class. This defines the type of window you are creating.</li>
+            <li>The window text is used in different ways by different types of windows. If the window has a title bar, the text is displayed in the title bar.</li>
+            <li>The window style is a set of flags that define some of the look and feel of a window. The constant <strong>WS_OVERLAPPEDWINDOW</strong> is actually several flags combined with a bitwise <strong>OR</strong>. Together these flags give the window a title bar, a border, a system menu, and <strong>Minimize</strong> and <strong>Maximize</strong> buttons. This set of flags is the most common style for a top-level application window.</li>
+            <li>For position and size, the constant <strong>CW_USEDEFAULT</strong> means to use default values.</li>
+            <li>The next parameter sets a parent window or owner window for the new window. Set the parent if you are creating a child window. For a top-level window, set this to <strong>NULL</strong>.</li>
+            <li>For an application window, the next parameter defines the menu for the window. This example does not use a menu, so the value is <strong>NULL</strong>.</li>
+            <li><em>hInstance</em> is the instance handle, described previously. (See <a href="winmain--the-application-entry-point.md">WinMain: The Application Entry Point</a>.)</li>
+            <li>The last parameter is a pointer to arbitrary data of type <strong>void*</strong>. You can use this value to pass a data structure to your window procedure. We'll show one possible way to use this parameter in the section <a href="managing-application-state-.md">Managing Application State</a>.</li>
+          </ul>
+          <p><a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-createwindowexa"><strong>CreateWindowEx</strong></a> returns a handle to the new window, or zero if the function fails. To show the window—that is, make the window visible —pass the window handle to the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-showwindow"><strong>ShowWindow</strong></a> function:</p>
+          <pre><code class="language-C++">ShowWindow(hwnd, nCmdShow);
+</code></pre>
+          <p>The <em>hwnd</em> parameter is the window handle returned by <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-createwindowexa"><strong>CreateWindowEx</strong></a>. The <em>nCmdShow</em> parameter can be used to minimize or maximize a window. The operating system passes this value to the program through the <strong>wWinMain</strong> function.</p>
+          <p>Here is the complete code to create the window. Remember that <code>WindowProc</code> is still just a forward declaration of a function.</p>
+          <pre><code class="language-C++">// Register the window class.
+const wchar_t CLASS_NAME[]  = L"Sample Window Class";
+
+WNDCLASS wc = { };
+
+wc.lpfnWndProc   = WindowProc;
+wc.hInstance     = hInstance;
+wc.lpszClassName = CLASS_NAME;
+
+RegisterClass(&amp;wc);
+
+// Create the window.
+
+HWND hwnd = CreateWindowEx(
+    0,                              // Optional window styles.
+    CLASS_NAME,                     // Window class
+    L"Learn to Program Windows",    // Window text
+    WS_OVERLAPPEDWINDOW,            // Window style
+
+    // Size and position
+    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+
+    NULL,       // Parent window
+    NULL,       // Menu
+    hInstance,  // Instance handle
+    NULL        // Additional application data
+    );
+
+if (hwnd == NULL)
+{
+    return 0;
+}
+
+ShowWindow(hwnd, nCmdShow);
+</code></pre>
+          <p>Congratulations, you've created a window! Right now, the window does not contain any content or interact with the user. In a real GUI application, the window would respond to events from the user and the operating system. The next section describes how window messages provide this sort of interactivity.</p>
+          <h3><a href="#next"></a>Next</h3>
+          <p><a href="window-messages.md">Window Messages</a></p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- site footer -->
+  <footer class="site-footer">
+    <div class="inner flex-container align-justify align-middle">
+      <div id="copyright"><a href="#">Tiencong283blog</a> &copy; 2020</div>
+      <div id="social-links">
+        <span><a href="https://www.facebook.com/tiencong283w">Facebook</a></span>
+        <span><a href="https://github.com/tiencong283">Github</a></span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/what-input.js"></script>
+<script src="js/vendor/foundation.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

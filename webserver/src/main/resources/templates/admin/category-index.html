@@ -30,7 +30,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="category: ${categories}">
+                    <tr th:each="category: ${categoriesForAdmin}">
                         <td th:text="${category.categoryID}">category ID</td>
                         <td th:text="${category.name}">category name</td>
                         <td th:text="${category.urlSlug}">category urlslug</td>

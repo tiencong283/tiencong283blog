@@ -11,10 +11,13 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+
+import java.util.Collections;
 
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAware {
@@ -27,7 +30,7 @@ public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAwa
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login.html").setViewName("login");
+        //
     }
 
     // anything in static folder will be served
@@ -85,7 +88,14 @@ public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         // across different data types, so this flag is "false" by default
         // for safer backwards compatibility.
         templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.setAdditionalDialects(Collections.singleton(springSecurityDialect()));
         return templateEngine;
+    }
+
+    // Thymeleaf - Spring Security integration modules
+    @Bean
+    public SpringSecurityDialect springSecurityDialect() {
+        return new SpringSecurityDialect();
     }
 
     @Bean

@@ -13,7 +13,6 @@ button:hover {
   cursor: pointer;
 }
 .site-container {
-  margin: 0 auto;
   margin-top: 10px;
   background-color: whitesmoke;
   box-shadow: 0 1px 5px grey;
@@ -43,8 +42,7 @@ button:hover {
 
 // footer
 .site-footer {
-  padding: 4px 0;
-
+  padding: 5px 0;
   .inner {
     flex-wrap: wrap;
   }
@@ -76,12 +74,12 @@ button:hover {
 }
 .site-content {
   margin-bottom: 20px;
+  margin-top: 32px;
 }
 .site-content-heading {
   font-size: 24px;
   display: inline-block;
   border-bottom: 1px solid #3B4951;
-  margin-bottom: 40px;
 }
 .post-listing .post:last-child {
   border-bottom: none;
@@ -94,6 +92,7 @@ button:hover {
     font-family: "Open Sans", sans-serif;
     color: rgb(125, 151, 173);
     font-size: 14px;
+    font-weight: bold;
   }
   .post-category:hover {
     text-decoration: underline;
@@ -102,27 +101,43 @@ button:hover {
     font-family: "Linux Libertine", "Georgia", "Times", serif;
     font-size: 21px;
   }
-  // its styles from wikipedia for focus reading
-  .post-summary{
-    color: rgb(34, 34, 34);
-    h1,h2,h3,h4,h5,h6 { // headings not shown in preview
+  .post-summary {
+    h1, h2, h3, h4, h5, h6 { // headings not shown
       display: none;
     }
-    a {
-      color: #0645ad;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    a, p{
-      font-size: 14px;
-    }
-    .read-more {
-      display: inline-block;
-      padding: 8px 0;
-    }
+  }
+  .read-more {
+    margin: 8px 0;
   }
 }
+
+// its styles from wikipedia for focus reading
+.post-content{
+
+  h1, h2 {
+    border-bottom: 1px solid #a2a9b1;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    margin-top: 1em;
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+  a {
+    color: #0645ad;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  a, p{
+    font-size: 14px;
+  }
+}
+
 // common form styles
 .has-error {
   border-color: #c60f13;

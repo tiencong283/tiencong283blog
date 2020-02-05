@@ -40,7 +40,8 @@ public class PostCategory implements Comparable<PostCategory> {
         this.setName(name);
         this.setUrlSlug(generateUrlSlug(name));
     }
-    public String getPublicPath(){
+
+    public String getPublicPath() {
         return "/category/" + this.urlSlug;
     }
 
@@ -55,12 +56,14 @@ public class PostCategory implements Comparable<PostCategory> {
     public void setUrlSlug(String urlSlug) {
         this.urlSlug = StringUtils.trimWhitespace(urlSlug);
     }
+
     // return the string with spaces replaced by hyphen (windows programming -> windows-programming)
-    public String generateUrlSlug(String name){
+    public String generateUrlSlug(String name) {
         return String.join("-", name.split("\\s+"));
     }
+
     @Override
     public int compareTo(PostCategory postCategory) {
-        return this.categoryID - postCategory.categoryID;   // sort by categoryID
+        return this.name.compareToIgnoreCase(postCategory.name);    // sort by names
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <body>
 
 <!-- common css -->
@@ -13,18 +14,25 @@
 <header class="site-header" th:fragment="site-header">
     <div class="top-bar inner">
         <div class="top-bar-left">
-            <i class="fi-home"></i><span><a href=""> Home</a></span>
+            <i class="fi-home"></i><span><a href="/"> Home</a></span>
         </div>
         <div class="top-bar-right">
             <ul class="menu dropdown site-header-nav" data-dropdown-menu>
                 <li>
                     <a href="#">Category</a>
                     <!-- category dropdown -->
+                    <ul class="menu"><li th:each="category: ${categories}"><a href="#" th:text="${category.name}">Reversing</a></li></ul>
+                </li>
+                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login.html}">Login</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="#">User</a>
+                    <!-- user actions dropdown -->
                     <ul class="menu">
-                        <li th:each="category: ${categories}"><a href="#" th:text="${category.name}">Reversing</a></li>
+                        <li><a th:href="@{${#authentication.principal.profilePath}}">Your profile</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/blog}">Manage blog</a></li>
+                        <li><a th:href="@{/logout.html}">Sign out</a></li>
                     </ul>
                 </li>
-                <li><a th:href="@{/login.html}">Login</a></li>
             </ul>
         </div>
     </div>
@@ -35,6 +43,5 @@
         <input type="search" placeholder="search for an article">
     </div>
 </section>
-
 </body>
 </html>

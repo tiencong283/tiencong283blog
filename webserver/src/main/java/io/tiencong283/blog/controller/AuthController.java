@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 @Controller
-public class RegistrationController {
+public class AuthController {
     private UserService userService;
     private UserFormValidator userFormValidator;
 
@@ -25,16 +26,22 @@ public class RegistrationController {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
     @Autowired
     public void setUserFormValidator(UserFormValidator userFormValidator) {
         this.userFormValidator = userFormValidator;
     }
 
+    @RequestMapping(value = "/login.html", method = {GET, HEAD})
+    public String showLoginPage(Principal principal){
+        if (principal != null){ // authenticated
+            return "redirect:/";
+        }
+        return "login";
+    }
+
     @RequestMapping(value = "/register.html", method = {GET, HEAD})
     public String showRegisterPage(Model model) {
-        UserForm userForm = new UserForm();
-        model.addAttribute("userForm", userForm);
+        model.addAttribute("userForm", new UserForm());
         return "registration";
     }
 

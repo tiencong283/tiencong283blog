@@ -26,8 +26,9 @@ public class PostCategoryService {
     public List<PostCategory> getAllCategories() {
         return categoryRepo.findAll();
     }
+
     // get all categories order by name
-    public List<PostCategory> getAllCategoriesOrderByName(){
+    public List<PostCategory> getAllCategoriesOrderByName() {
         return categoryRepo.findByOrderByNameAsc();
     }
 

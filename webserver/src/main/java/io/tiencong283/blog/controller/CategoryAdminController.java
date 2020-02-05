@@ -10,8 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -28,15 +26,10 @@ public class CategoryAdminController {
         this.categoryValidator = categoryValidator;
     }
 
-    @ModelAttribute
-    public void populateCategories(Model model) {
-        List<PostCategory> allCategories = postCategoryService.getAllCategories();
-        Collections.sort(allCategories);
-        model.addAttribute("categories", allCategories);
-    }
-
     @RequestMapping(value = "", method = {GET, HEAD})
     public String showCategoryDashboard(Model model) {
+        // global categories for headers sort by name, not suitable in this case
+        model.addAttribute("categoriesForAdmin", postCategoryService.getAllCategories());
         model.addAttribute("category", new PostCategory());
         return "admin/category-index";
     }

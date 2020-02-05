@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface PostCategoryRepository extends JpaRepository<PostCategory, Integer> {
     boolean existsByNameIgnoreCase(String name);
+
     List<PostCategory> findByOrderByNameAsc();
 }

@@ -11,7 +11,10 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findByDraftIsFalseAndPublicSlug(String publicSlug);
+
     Page<Post> findByDraftIsFalse(Pageable pageRequest);
+
     List<Post> findAllByDraftIsTrueOrderByCreationDateDesc();
+
     boolean existsByTitle(String title);
 }

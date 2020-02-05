@@ -1,7 +1,6 @@
 package io.tiencong283.blog.controller;
 
 import io.tiencong283.blog.model.Post;
-import io.tiencong283.blog.model.PostCategory;
 import io.tiencong283.blog.model.PostFormat;
 import io.tiencong283.blog.service.PostCategoryService;
 import io.tiencong283.blog.service.PostService;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -39,14 +36,17 @@ public class PostAdminController {
     public void setPostService(PostService postService) {
         this.postService = postService;
     }
+
     @Autowired
     public void setCategoryService(PostCategoryService categoryService) {
         this.categoryService = categoryService;
     }
+
     @Autowired
     public void setPageableFactory(PageableFactory pageableFactory) {
         this.pageableFactory = pageableFactory;
     }
+
     @Autowired
     public void setPostFormValidator(PostFormValidator postFormValidator) {
         this.postFormValidator = postFormValidator;
@@ -54,11 +54,9 @@ public class PostAdminController {
 
     @ModelAttribute
     public void populateModel(Model model) {    // some common model attributes
-        List<PostCategory> categories = categoryService.getAllCategories();
-        Collections.sort(categories);
-        model.addAttribute("categories", categories);
         model.addAttribute("formats", PostFormat.values());
     }
+
     // controllers
     @RequestMapping(path = "", method = {GET, HEAD})
     public String showDashboard(Model model, @RequestParam(defaultValue = "1") int page, HttpServletRequest request) {
@@ -79,8 +77,7 @@ public class PostAdminController {
         if (errors.hasErrors()) {
             return "admin/post-new";
         }
-        // principal is different from (WebUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-        // so casting to WebUser will be failed
+        // principal is authentication object
         Post post = postService.addPost(postForm, principal.getName());
         return String.format("redirect:/admin/blog/post/%s/edit", post.getAdminSlug());
     }

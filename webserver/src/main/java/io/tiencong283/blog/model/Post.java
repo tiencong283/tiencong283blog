@@ -101,7 +101,8 @@ public class Post {
         }
 
         // remove unnecessary characters
-        String cleanTitle = decomposed.toString().replaceAll("([^a-zA-Z0-9]+)", "-").toLowerCase();              if (cleanTitle.charAt(cleanTitle.length() - 1) == '-')
+        String cleanTitle = decomposed.toString().replaceAll("([^a-zA-Z0-9]+)", "-").toLowerCase();
+        if (cleanTitle.charAt(cleanTitle.length() - 1) == '-')
             return cleanTitle.substring(0, cleanTitle.length() - 1);
         return cleanTitle;
     }

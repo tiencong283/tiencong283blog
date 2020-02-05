@@ -31,7 +31,7 @@ public class WebUser implements UserDetails {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private WebUserRole role = WebUserRole.USER_ROLE;
+    private WebUserRole role = WebUserRole.ROLE_USER;
 
     @Transient
     private User user;  // core user information implementation of UserDetails
@@ -40,7 +40,7 @@ public class WebUser implements UserDetails {
     }
 
     public WebUser(String username, String password, String email) {
-        this(username, password, email, WebUserRole.USER_ROLE);
+        this(username, password, email, WebUserRole.ROLE_USER);
     }
 
     public WebUser(String username, String password, String email, WebUserRole role) {
@@ -53,6 +53,10 @@ public class WebUser implements UserDetails {
 
     public static WebUser fromUserForm(UserForm userForm) {
         return new WebUser(userForm.getUsername(), userForm.getPassword(), userForm.getEmail());
+    }
+
+    public String getProfilePath() {
+        return String.format("/user/%s", this.username);
     }
 
     public void createUser() {

@@ -16,19 +16,19 @@
     <!-- site content goes here -->
     <div class="site-content-wrapper">
         <div class="inner">
-            <h2 class="site-content-heading">All posts</h2>
+            <h1 class="site-content-heading">All posts</h1>
             <div class="site-content post-listing">
 
                 <div class="post" th:each="post: ${posts}">
                     <div class="flex-container align-justify post-metadata">
-                        <span class="post-category"><a th:href="@{${post.category.publicPath}}" th:text="${post.category.name}">post category</a></span>
-                        <span class="post-publish-date"><em th:text="${post.formattedPublishDate}">January 24, 2020</em></span>
+                        <a class="post-category" th:href="@{${post.category.publicPath}}" th:text="${post.category.name}">post category</a>
+                        <em th:text="${post.formattedPublishDate}">January 24, 2020</em>
                     </div>
-                    <h3 class="post-title"><a th:text="${post.title}" th:href="@{${post.publicPath}}">post title</a></h3>
-                    <div class="post-summary">
-                        <p th:utext="${post.summary}">post content</p>
-                        <a href="" class="read-more">read more ...</a>
+                    <h2 class="post-title"><a th:text="${post.title}" th:href="@{${post.publicPath}}">post title</a></h2>
+                    <div class="post-summary post-content">
+                        <div th:utext="${post.summary}">post content</div>
                     </div>
+                    <a th:href="@{${post.publicPath}}" class="hollow button tiny read-more">read more</a>
                 </div>
             </div>
         </div>
